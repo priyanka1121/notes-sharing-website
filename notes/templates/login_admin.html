@@ -1,34 +1,57 @@
-{% extends 'navigation.html'%}
-{% load static %} 
-{% block body %} 
-{% if error == "no" %}
-<script>
-    alert('Logged In Successfully...');
-    window.location = ('{% url 'admin_home' %}');
-</script>
-{% endif %} 
-{% if error == "yes" %}
-<script>
-    alert('Invalid Login Credentials, Try Again');
-</script>
+{% extends 'navigation.html' %}
+{% load static %}
+{% block body %}
 
-{% endif %}
+<section class="auth-page">
+  <div class="auth-card">
 
-<br><br><br><br><br>
-<section class="adminlog" id="adminlog">
-    <h1 class="heading mt-5">Admin Login</h1>
+    <!-- LEFT (FORM) -->
+    <div class="auth-form">
+      <h2>Admin Login</h2>
+      <p class="auth-subtext">Access the admin dashboard</p>
 
-    <div class="row">
-        <div class="image">
-            <img src="{% static 'images/Kids Studying from Home-rafiki.png' %}" alt="">
+      {% if error == "yes" %}
+        <div class="alert error">
+          ❌ Invalid login credentials. Please try again.
         </div>
-        <form method="post">
-            {% csrf_token %}
-            <input type="text" placeholder="Enter Username" name="uname" class="box">
-            <input type="password" placeholder="Enter Password" name="pwd" class="box">
-            <input type="submit" class="btn" value="LOGIN">
-        </form>
+      {% endif %}
+
+      <form method="post">
+        {% csrf_token %}
+
+        <div class="form-group">
+          <input
+            type="text"
+            name="uname"
+            placeholder="Admin Username"
+            required
+          >
+        </div>
+
+        <div class="form-group">
+          <input
+            type="password"
+            name="pwd"
+            placeholder="Password"
+            required
+          >
+        </div>
+
+        <button type="submit" class="btn-primary full">
+          Login as Admin
+        </button>
+      </form>
     </div>
+
+    <!-- RIGHT (IMAGE) -->
+    <div class="auth-visual">
+      <img
+        src="{% static 'images/Kids Studying from Home-rafiki.png' %}"
+        alt="Admin Login"
+      >
+    </div>
+
+  </div>
 </section>
 
 {% endblock %}

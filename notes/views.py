@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from .models import *
 from django.contrib.auth import authenticate, logout, login
 from datetime import date
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def about(request):
@@ -44,20 +45,20 @@ def userlogin(request):
     return render(request, 'login.html', locals())
 
 def login_admin(request):
-    error = ""
-    if request.method == 'POST':
-        u = request.POST['uname']
-        p = request.POST['pwd']
-        user = authenticate(username=u, password=p)
-        try:
-            if user.is_staff:
-                login(request, user)
-                error = "no"
-            else:
-                error ="yes"
-        except:
+    error = None
+    if request.method == "POST":
+        username = request.POST.get("uname")
+        password = request.POST.get("pwd")
+        user = authenticate(request, username=username, password=password)
+        print("AUTH USER:", user)
+        if user is not None:
+            print("IS STAFF:", user.is_staff)
+        if user is not None and user.is_staff:
+            login(request, user)
+            return redirect("admin_home")
+        else:
             error = "yes"
-    return render(request,'login_admin.html', locals())
+    return render(request, "login_admin.html", {"error": error})
 
 def signup1(request):
     error=""
@@ -92,14 +93,16 @@ def Logout(request):
     return redirect('index')
 
 def profile(request):
-    if not request.user.is_authenticated:
-        return redirect('login')
-    user = User.objects.get(id=request.user.id)
-    data = Signup.objects.get(user = user)
+    user = request.user
+    profile, _ = UserProfile.objects.get_or_create(user=user)
+    signup = Signup.objects.get(user=user)
+    context = {
+        "data": profile,      # avatar comes from here
+        "signup": signup,     # branch/contact comes from here
+        "user": user,
+    }
 
-
-    d = {'data':data,'user':user}
-    return render(request,'profile.html',d)
+    return render(request, "profile.html", context)
 
 def edit_profile(request):
     if not request.user.is_authenticated:
@@ -300,3 +303,15 @@ def view_queries(request,pid):
     contact.save()
     return render(request,'view_queries.html', locals())
 
+
+def upload_avatar(request):
+    if request.method == "POST" and request.FILES.get("avatar"):
+        print("FILES:", request.FILES)
+        print("POST:", request.POST)
+        profile, created = UserProfile.objects.get_or_create(
+            user=request.user
+        )
+        profile.avatar = request.FILES["avatar"]
+        profile.save()
+
+    return redirect("profile")

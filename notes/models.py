@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
+from datetime import timedelta
 # Create your models here.
 
 class Signup(models.Model):
@@ -36,3 +38,37 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.id
+    
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    contact = models.CharField(max_length=20, blank=True)
+    branch = models.CharField(max_length=100, blank=True)
+    avatar = models.ImageField(upload_to="avatars/", blank=True, null=True)
+    last_active = models.DateTimeField(null=True, blank=True)
+
+    def completion_percent(self):
+        fields = [
+            self.user.first_name,
+            self.user.last_name,
+            self.user.email,
+            self.contact,
+            self.branch,
+        ]
+
+        completed = sum(1 for f in fields if f)
+        percent = int((completed / len(fields)) * 80)
+
+        if self.avatar:
+            percent += 20
+
+        return percent
+    
+    def is_online(self):
+        if not self.last_active:
+            return False
+        return timezone.now() - self.last_active <= timedelta(minutes=2)
+
+    def last_seen(self):
+        if not self.last_active:
+            return "Never"
+        return self.last_active

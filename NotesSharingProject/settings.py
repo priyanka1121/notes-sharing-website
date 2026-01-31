@@ -48,6 +48,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'notes.middleware.LastActiveMiddleware',
 ]
 
 ROOT_URLCONF = 'NotesSharingProject.urls'
@@ -126,3 +127,7 @@ MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+TEMPLATES[0]["OPTIONS"]["context_processors"] += [
+    "notes.context_processors.user_profile",
+]
