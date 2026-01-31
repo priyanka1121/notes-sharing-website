@@ -1,50 +1,126 @@
 {% load static %}
-
-<html lang="en" xmlns="http://www.w3.org/1999/html">
-
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Note Sharing</title>
 
-    <!-- google fonts cdn link  -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>{% block title %}NoteStack{% endblock %}</title>
 
-    <!-- font awesome cdn link  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- custom css file link  -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
 
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 
 <body>
 
-    <!-- header section starts  -->
+<!-- ================= GLOBAL HEADER ================= -->
+<header class="site-header">
+    <div class="container header-inner">
 
-    <header>
+        <div class="left">
+            <div class="menu-toggle" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
 
-        <div id="menu" class="fas fa-bars"></div>
-
-        <a href="{% url 'index' %}" class="logo"><i class="fas fa-book-reader"></i> Online Notes Sharing</a>
+            <a href="{% url 'index' %}" class="logo">
+                <i class="fas fa-book-reader"></i> NoteStack
+            </a>
+        </div>
 
         <nav class="navbar">
             <ul>
-                <li><a class="active" href="{% url 'index' %}">Home</a></li>
-                <li><a href="{% url 'about' %}">About</a></li>
-                <li><a href="{% url 'contact' %}">Contact</a></li>
+                <li><a href="{% url 'index' %}" class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="{% url 'contact' %}" class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">Contact</a></li>
                 <li><a href="{% url 'signup' %}">Signup</a></li>
                 <li><a href="{% url 'login' %}">Login</a></li>
-                <!--<li><a href="{% url 'login_admin' %}">Admin Login</a></li>-->
             </ul>
         </nav>
 
-    </header>
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+            <i class="fas fa-moon"></i>
+        </button>
 
-    <!-- header section ends -->
+    </div>
+</header>
+
+<!-- ================= PAGE CONTENT ================= -->
+<main>
+    {% block body %}
+    {% endblock %}
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+    <div class="container box-container">
+
+        <div class="box">
+            <h3>Branch Locations</h3>
+            <p>Delhi</p>
+            <p>Bengaluru</p>
+        </div>
+
+        <div class="box">
+            <h3>Quick Links</h3>
+            <a href="{% url 'index' %}">Home</a>
+            <a href="#features">Features</a>
+            <a href="{% url 'contact' %}">Contact</a>
+        </div>
+
+        <div class="box">
+            <h3>Contact</h3>
+            <p><i class="fas fa-map-marker-alt"></i> Delhi</p>
+            <p><i class="fas fa-envelope"></i> info@gmail.com</p>
+            <p><i class="fas fa-phone"></i> +91 7564838224</p>
+        </div>
+
+    </div>
+
+    <p class="credit">All Rights Reserved</p>
+</footer>
+
+<!-- ================= GLOBAL JS ================= -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* Theme toggle */
+    const toggle = document.getElementById("theme-toggle");
+    const icon = toggle.querySelector("i");
+    const html = document.documentElement;
+
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+        html.setAttribute("data-theme", savedTheme);
+        icon.className = savedTheme === "dark" ? "fas fa-sun" : "fas fa-moon";
+    }
+
+    toggle.addEventListener("click", function () {
+        const isDark = html.getAttribute("data-theme") === "dark";
+        html.setAttribute("data-theme", isDark ? "light" : "dark");
+        icon.className = isDark ? "fas fa-moon" : "fas fa-sun";
+        localStorage.setItem("theme", isDark ? "light" : "dark");
+    });
+
+    /* Mobile navbar */
+    const menuBtn = document.getElementById("menu-toggle");
+    const navbar = document.querySelector(".navbar");
+
+    menuBtn.addEventListener("click", function () {
+        navbar.classList.toggle("open");
+    });
+
+});
+</script>
+
 </body>
-
 </html>
-
-{% block body %} {% endblock %}

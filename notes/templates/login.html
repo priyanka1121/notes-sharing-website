@@ -1,35 +1,75 @@
-{% extends 'navigation.html'%}
+{% extends 'navigation.html' %}
 {% load static %}
+
+{% block title %}Login | NoteStack{% endblock %}
+
 {% block body %}
 
-{% if error == "no" %}
-<script>
-	alert('Logged In Successfully...');
-	window.location=('{% url 'profile' %}');
-</script>
-{% endif %}
+<section class="auth-page">
+  <div class="container">
 
-{% if error == "yes" %}
-<script>
-	alert('Invalid Login Credentials, Try Again');
-</script>
-{% endif %}
+    <div class="auth-card">
 
-<br><br><br><br><br>
-<section class="userlog" id="userlog">
-<h1 class="heading mt-5">User Login</h1>
+      <!-- LEFT: FORM -->
+      <div class="auth-form">
+        <h1>Welcome back</h1>
+        <p class="subtitle">
+          Login to access your notes and dashboard.
+        </p>
 
-<div class="row">
-    <div class="image">
-        <img src="{% static 'images/webinar-pana.png' %}" alt="">
+        {% if error == "no" %}
+          <div class="alert success">
+            ✅ Logged in successfully. Redirecting…
+          </div>
+          <script>
+            setTimeout(() => {
+              window.location.href = "{% url 'profile' %}";
+            }, 1200);
+          </script>
+        {% endif %}
+
+        {% if error == "yes" %}
+          <div class="alert error">
+            ❌ Invalid login credentials. Please try again.
+          </div>
+        {% endif %}
+
+        <form method="post">
+          {% csrf_token %}
+
+          <input
+            type="email"
+            name="emailid"
+            placeholder="Email address"
+            required
+          >
+
+          <input
+            type="password"
+            name="pwd"
+            placeholder="Password"
+            required
+          >
+
+          <button type="submit" class="btn-primary full-width">
+            Login
+          </button>
+        </form>
+
+        <p class="auth-footer-text">
+          Don’t have an account?
+          <a href="{% url 'signup' %}">Create one</a>
+        </p>
+      </div>
+
+      <!-- RIGHT: IMAGE -->
+      <div class="auth-image">
+        <img src="{% static 'images/webinar-pana.png' %}" alt="Login illustration">
+      </div>
+
     </div>
-    <form method="post">
-        {% csrf_token %}
-		<input type="email" placeholder="Enter Email ID" name="emailid" class="box">
-        <input type="password" placeholder="Enter Password" name="pwd" class="box">
-        <p>don't have an account? <a href="{% url 'signup' %}">register now</a></p>
-        <input type="submit" class="btn" value="login">
-    </form>
-</div>
+
+  </div>
 </section>
+
 {% endblock %}
