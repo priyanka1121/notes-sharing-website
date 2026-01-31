@@ -48,5 +48,6 @@ urlpatterns = [
     path('change_passwordadmin', change_passwordadmin, name='change_passwordadmin'),
     path('unread_queries', unread_queries, name='unread_queries'),
     path('read_queries', read_queries, name='read_queries'),
+    path("upload-avatar/", upload_avatar, name="upload_avatar"),
     path('view_queries/<int:pid>', view_queries, name='view_queries'),
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
