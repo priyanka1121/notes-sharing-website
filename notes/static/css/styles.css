@@ -1,0 +1,679 @@
+/* ================= CSS VARIABLES ================= */
+
+:root {
+    --bg: #f9fafb;
+    --bg-card: #ffffff;
+    --text: #111827;
+    --muted: #6b7280;
+    --primary: #6366f1;
+    --border: #e5e7eb;
+}
+
+[data-theme="dark"] {
+    --bg: #0f172a;
+    --bg-card: #020617;
+    --text: #e5e7eb;
+    --muted: #94a3b8;
+    --primary: #818cf8;
+    --border: #1e293b;
+}
+
+/* ================= RESET ================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Inter", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+}
+
+/* ================= GLOBAL CONTAINER ================= */
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+/* ================= HEADER ================= */
+
+.site-header {
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+}
+
+.left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.logo {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--primary);
+    text-decoration: none;
+}
+
+.menu-toggle {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* ================= NAVBAR ================= */
+
+.navbar ul {
+    display: flex;
+    list-style: none;
+    gap: 22px;
+}
+
+.navbar a {
+    text-decoration: none;
+    color: var(--muted);
+    font-weight: 500;
+}
+
+.navbar a.active,
+.navbar a:hover {
+    color: var(--primary);
+}
+
+/* ================= THEME TOGGLE ================= */
+
+.theme-toggle {
+    border: 1px solid var(--border);
+    background: none;
+    border-radius: 50%;
+    padding: 8px 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.theme-toggle:hover {
+    background: var(--primary);
+    color: #fff;
+}
+
+/* ================= HERO ================= */
+
+.hero {
+    background: linear-gradient(135deg, #eef2ff, #f8fafc);
+    padding: 110px 0;
+}
+
+[data-theme="dark"] .hero {
+    background: linear-gradient(135deg, #020617, #0f172a);
+}
+
+.hero-content {
+    max-width: 720px;
+    margin: auto;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.hero p {
+    margin-top: 14px;
+    font-size: 17px;
+    color: var(--muted);
+}
+
+.hero-actions {
+    margin-top: 32px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+/* ================= BUTTONS ================= */
+
+.btn-primary {
+    background: var(--primary);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.btn-secondary {
+    border: 1px solid var(--border);
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--text);
+}
+
+/* ================= FEATURES ================= */
+
+.features {
+    padding: 90px 0;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 50px;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+}
+
+.feature-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 32px 24px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-4px);
+}
+
+.feature-card i {
+    font-size: 28px;
+    color: var(--primary);
+    margin-bottom: 14px;
+}
+
+.feature-card h3 {
+    margin-bottom: 10px;
+}
+
+/* ================= STEPS ================= */
+
+.steps {
+    background: var(--bg-card);
+    padding: 80px 0;
+}
+
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    text-align: center;
+}
+
+.step {
+    padding: 22px;
+    border-radius: 12px;
+    border: 1px dashed var(--border);
+    font-weight: 500;
+}
+
+/* ================= FOOTER ================= */
+
+.footer {
+    border-top: 1px solid var(--border);
+    background: var(--bg-card);
+    padding: 60px 0 30px;
+}
+
+.box-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 30px;
+}
+
+.box h3 {
+    margin-bottom: 14px;
+}
+
+.box p,
+.box a {
+    color: var(--muted);
+    display: block;
+    margin: 6px 0;
+    text-decoration: none;
+}
+
+.credit {
+    text-align: center;
+    margin-top: 40px;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 768px) {
+    .navbar ul {
+        display: none;
+    }
+
+    .hero h1 {
+        font-size: 36px;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+    }
+}
+
+/* ================= NAVBAR BUBBLE HOVER (FIXED) ================= */
+
+.navbar a {
+    position: relative;
+    padding: 6px 14px;
+    border-radius: 999px;
+    transition: color 0.25s ease;
+    z-index: 1;
+}
+
+/* Bubble hidden by default */
+.navbar a::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--primary);
+    opacity: 0;
+    border-radius: 999px;
+    transform: scale(0.8);
+    transition: transform 0.25s ease, opacity 0.25s ease;
+    z-index: -1;
+}
+
+/* Bubble appears ONLY on hover or active */
+.navbar a:hover::before,
+.navbar a.active::before {
+    opacity: 0.18;
+    transform: scale(1);
+}
+
+/* Optional: text color change on hover */
+.navbar a:hover,
+.navbar a.active {
+    color: var(--primary);
+}
+
+/* ================= MOBILE NAVBAR ================= */
+
+@media (max-width: 768px) {
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .navbar {
+        position: absolute;
+        top: 64px;
+        left: 0;
+        width: 100%;
+        background: var(--bg-card);
+        border-bottom: 1px solid var(--border);
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+
+    .navbar.open {
+        max-height: 400px;
+    }
+
+    .navbar ul {
+        flex-direction: column;
+        padding: 16px 0;
+    }
+
+    .navbar li {
+        text-align: center;
+        margin: 6px 0;
+    }
+}
+
+/* Hide menu icon on desktop */
+.menu-toggle {
+    display: none;
+}
+
+.feature-card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+}
+
+.btn-secondary:hover {
+    background: var(--bg-card);
+}
+
+/* ================= THEME TOGGLE (FIXED VISIBILITY) ================= */
+
+.theme-toggle {
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    border-radius: 999px;
+    padding: 8px 10px;
+    cursor: pointer;
+    color: var(--text);
+    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+/* Dark mode: make it stand out */
+[data-theme="dark"] .theme-toggle {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.15);
+    color: #f8fafc;
+}
+
+/* Hover = polish, not visibility */
+.theme-toggle:hover {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+}
+
+/* ================= FOOTER UPGRADE ================= */
+
+.footer {
+    position: relative;
+    background:
+        radial-gradient(1200px 400px at 50% -200px, rgba(99, 102, 241, 0.12), transparent 60%),
+        var(--bg-card);
+    border-top: 1px solid var(--border);
+    padding: 80px 0 40px;
+    overflow: hidden;
+}
+
+/* Soft top glow line */
+.footer::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    opacity: 0.35;
+}
+
+/* Center + balance columns */
+.footer .box-container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 40px;
+    text-align: center;
+}
+
+/* Headings */
+.footer .box h3 {
+    font-size: 18px;
+    margin-bottom: 14px;
+    letter-spacing: 0.3px;
+}
+
+/* Links & text */
+.footer .box p,
+.footer .box a {
+    color: var(--muted);
+    font-size: 15px;
+    margin: 8px 0;
+    transition: color 0.25s ease, transform 0.25s ease;
+}
+
+/* Hover motion */
+.footer .box a:hover,
+.footer .box p:hover {
+    color: var(--primary);
+    transform: translateY(-2px);
+}
+
+/* Contact icons spacing */
+.footer .box i {
+    margin-right: 8px;
+    color: var(--primary);
+}
+
+/* Bottom credit */
+.footer .credit {
+    margin-top: 50px;
+    text-align: center;
+    font-size: 14px;
+    color: var(--muted);
+    opacity: 0.8;
+}
+
+/* Fade-in animation */
+.footer .box {
+    animation: footerFadeUp 0.8s ease both;
+}
+
+.footer .box:nth-child(2) {
+    animation-delay: 0.1s;
+}
+
+.footer .box:nth-child(3) {
+    animation-delay: 0.2s;
+}
+
+@keyframes footerFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ================= CONTACT PAGE ================= */
+
+.contact-page {
+    padding: 100px 0;
+}
+
+.contact-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 50px;
+    align-items: center;
+}
+
+.contact-form h1 {
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.contact-form .subtitle {
+    color: var(--muted);
+    margin-bottom: 28px;
+}
+
+/* Alerts */
+.alert {
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.alert.success {
+    background: rgba(34, 197, 94, 0.12);
+    color: #22c55e;
+}
+
+.alert.error {
+    background: rgba(239, 68, 68, 0.12);
+    color: #ef4444;
+}
+
+/* Form */
+.contact-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.contact-form input,
+.contact-form textarea {
+    padding: 14px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* Button */
+.full-width {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Image */
+.contact-image img {
+    width: 100%;
+    max-width: 420px;
+    margin: auto;
+    display: block;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 900px) {
+    .contact-card {
+        grid-template-columns: 1fr;
+        padding: 30px;
+    }
+
+    .contact-image {
+        order: -1;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ================= AUTH (SIGNUP / LOGIN) ================= */
+
+.auth-page {
+    padding: 100px 0;
+}
+
+.auth-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 50px;
+    align-items: center;
+}
+
+.auth-form h1 {
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.auth-form .subtitle {
+    color: var(--muted);
+    margin-bottom: 28px;
+}
+
+.auth-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.auth-form input,
+.auth-form select {
+    padding: 14px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--bg);
+    color: var(--text);
+    font-size: 14px;
+}
+
+.auth-form input:focus,
+.auth-form select:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+/* Footer text */
+.auth-footer-text {
+    margin-top: 20px;
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.auth-footer-text a {
+    color: var(--primary);
+    text-decoration: none;
+}
+
+/* Image */
+.auth-image img {
+    width: 100%;
+    max-width: 420px;
+    margin: auto;
+    display: block;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 900px) {
+    .auth-card {
+        grid-template-columns: 1fr;
+        padding: 30px;
+    }
+
+    .auth-image {
+        order: -1;
+    }
+}

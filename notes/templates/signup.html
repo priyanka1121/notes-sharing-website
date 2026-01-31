@@ -1,58 +1,86 @@
-{% extends 'navigation.html'%} {% load static %} {% block body %} {% if error == "no" %}
-<script>
-    alert('Signup Successfull');
-    window.location = ('{% url '
-        login ' %}');
-</script>
-{% endif %} {% if error == "yes" %}
-<script>
-    alert('Something went wrong, Try Again');
-</script>
-{% endif %}
-<br><br><br><br>
-<section class="signup" id="signup">
-    <h1 class="heading">User Signup Form</h1>
-    <div class="row">
+{% extends 'navigation.html' %}
+{% load static %}
+
+{% block title %}Signup | NoteStack{% endblock %}
+
+{% block body %}
+
+<section class="auth-page">
+  <div class="container">
+
+    <div class="auth-card">
+
+      <!-- LEFT: FORM -->
+      <div class="auth-form">
+        <h1>Create an account</h1>
+        <p class="subtitle">
+          Join NoteStack to manage and share notes securely.
+        </p>
+
+        {% if error == "no" %}
+          <div class="alert success">
+            ✅ Signup successful. Redirecting to login…
+          </div>
+          <script>
+            setTimeout(() => {
+              window.location.href = "{% url 'login' %}";
+            }, 1500);
+          </script>
+        {% endif %}
+
+        {% if error == "yes" %}
+          <div class="alert error">
+            ❌ Something went wrong. Please try again.
+          </div>
+        {% endif %}
+
         <form method="post">
-            {% csrf_token %}
+          {% csrf_token %}
 
-            <input type="text" placeholder="Enter First Name" class="box" name="firstname" required>
+          <div class="form-grid">
+            <input type="text" name="firstname" placeholder="First name" required>
+            <input type="text" name="lastname" placeholder="Last name" required>
+          </div>
 
+          <input type="number" name="contact" placeholder="Contact number" required>
+          <input type="email" name="emailid" placeholder="Email address" required>
+          <input type="password" name="password" placeholder="Password" required>
 
-            <input type="text" placeholder="Enter Last Name" class="box" name="lastname" required>
+          <select name="branch" required>
+            <option value="">Select course</option>
+            <option value="BCA">BCA</option>
+            <option value="MCA">MCA</option>
+            <option value="Btech">BTech</option>
+            <option value="MTech">MTech</option>
+            <option value="Computer Science">Computer Science</option>
+            <option value="IT">IT</option>
+          </select>
 
+          <select name="role" required>
+            <option value="">Select role</option>
+            <option value="Student">Student</option>
+            <option value="Teacher">Teacher</option>
+          </select>
 
-            <input type="number" placeholder="Enter Contact Number" class="box" name="contact" required>
-
-
-            <input type="email" placeholder="Enter Email Address" class="box" name="emailid" required>
-
-
-            <input type="password" placeholder="Password" class="box" name="password" required>
-            <select name="branch" class="box" style="background-color : black">
-                                      <option value="">--- Select Course ---</option>
-									  <option value="Computer Science">BCA</option>
-									  <option value="Mechanical">MCA</option>
-									  <option value="Civil">Btech</option>
-									  <option value="Electronics">MTech</option>
-									  <option value="Electric">Computer Science</option>
-									  <option value="IT">IT</option>
-									</select>
-
-
-            <select name="role" class="box" style="background-color : black">
-                                        <option value="">--- Role ---</option>
-										<option value="Student">Student</option>
-										<option value="Teacher">Teacher</option>
-									</select>
-            <hr>
-            <input type="submit" class="btn btn-primary mt-2" value="SUBMIT">
+          <button type="submit" class="btn-primary full-width">
+            Create Account
+          </button>
         </form>
-        <div class="image">
-            <img src="{% static 'images/Taking notes-amico.png' %}" alt="">
-        </div>
+
+        <p class="auth-footer-text">
+          Already have an account?
+          <a href="{% url 'login' %}">Login</a>
+        </p>
+      </div>
+
+      <!-- RIGHT: IMAGE -->
+      <div class="auth-image">
+        <img src="{% static 'images/Taking notes-amico.png' %}" alt="Signup illustration">
+      </div>
+
     </div>
 
+  </div>
 </section>
 
 {% endblock %}

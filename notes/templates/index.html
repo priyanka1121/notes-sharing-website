@@ -1,87 +1,175 @@
 {% load static %}
-
-<html lang="en">
-
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Note Sharing</title>
+    <title>NoteStack</title>
 
-    <!-- google fonts cdn link  -->
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- font awesome cdn link  -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    />
 
-    <!-- custom css file link  -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="icon" href="https://cdn-icons.flaticon.com/png/512/3277/premium/3277345.png?token=exp=1654448817~hmac=0f812d483a8ae90fdf72d739eba6b42c" type="image/x-icon">
-
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 
 <body>
 
-    <!-- header section starts  -->
+<!-- ================= HEADER ================= -->
+<header class="site-header">
+    <div class="container header-inner">
 
-    <header>
-        <div id="menu" class="fas fa-bars"></div>
-        <a href="{% url 'index' %}" class="logo"><i class="fas fa-book-reader"></i> Online Notes Sharing</a>
+        <div class="left">
+            <div class="menu-toggle" id="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+
+            <a href="{% url 'index' %}" class="logo">
+                <i class="fas fa-book-reader"></i> NoteStack
+            </a>
+        </div>
 
         <nav class="navbar">
             <ul>
                 <li><a class="active" href="{% url 'index' %}">Home</a></li>
-                <li><a href="{% url 'about' %}">About</a></li>
+                <li><a href="#features">Features</a></li>
                 <li><a href="{% url 'contact' %}">Contact</a></li>
                 <li><a href="{% url 'signup' %}">Signup</a></li>
                 <li><a href="{% url 'login' %}">Login</a></li>
                 <li><a href="{% url 'login_admin' %}">Admin</a></li>
             </ul>
         </nav>
-    </header>
-    <!-- header section ends -->
 
-    <!-- home section starts  -->
-    <section class="home" id="home">
-        <h1 style="background-color : white">Online Notes Sharing</h1>
-        <div class="shape"></div>
-    </section>
-    <!-- home section ends -->
+        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+            <i class="fas fa-moon"></i>
+        </button>
 
+    </div>
+</header>
 
-    <!-- footer section starts  -->
-    <div class="footer">
-        <div class="box-container">
-            <div class="box">
-                <h3>Branch Locations</h3>
-                <a href="#">Delhi</a>
-                <a href="#">Bengaluru</a>
+<!-- ================= HERO ================= -->
+<section class="hero">
+    <div class="container hero-content">
+        <h1>
+            Organize your notes.<br>
+            Share them securely.
+        </h1>
+
+        <p>
+            NoteStack helps you store, manage and share notes with full control and privacy.
+        </p>
+
+        <div class="hero-actions">
+            <a href="{% url 'signup' %}" class="btn-primary">Get Started</a>
+            <a href="{% url 'login' %}" class="btn-secondary">View Notes</a>
+        </div>
+    </div>
+</section>
+
+<!-- ================= FEATURES ================= -->
+<section class="features" id="features">
+    <div class="container">
+        <h2 class="section-title">Why NoteStack?</h2>
+
+        <div class="feature-grid">
+            <div class="feature-card">
+                <i class="fas fa-lock"></i>
+                <h3>Secure</h3>
+                <p>Your notes are protected with authentication and approval-based access.</p>
             </div>
 
-            <div class="box">
-                <h3>Quick Links</h3>
-                <a href="{% url 'index' %}">Home</a>
-                <a href="{% url 'about' %}">About</a>
-                <a href="{% url 'contact' %}">Contact</a>
+            <div class="feature-card">
+                <i class="fas fa-folder-open"></i>
+                <h3>Organized</h3>
+                <p>Easily manage, update and categorize your notes in one place.</p>
             </div>
 
-            <div class="box">
-                <h3>contact info</h3>
-                <p> <i class="fas fa-map-marker-alt"></i> Delhi</p>
-                <p> <i class="fas fa-envelope"></i> info@gmail.com </p>
-                <p> <i class="fas fa-phone"></i> +91 7564838224 </p>
+            <div class="feature-card">
+                <i class="fas fa-share-alt"></i>
+                <h3>Share Smartly</h3>
+                <p>Share notes only with the right people, with full control.</p>
             </div>
         </div>
-        <h1 class="credit">All Rights Reserved</h1>
     </div>
-    <!-- footer section ends -->
+</section>
 
-    <!-- jquery cdn link  -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- ================= HOW IT WORKS ================= -->
+<section class="steps">
+    <div class="container">
+        <h2 class="section-title">How it works</h2>
 
-    <!-- custom js file link  -->
-    <script src="{% static 'js/script.js' %}"></script>
+        <div class="steps-grid">
+            <div class="step">1. Create an account</div>
+            <div class="step">2. Upload your notes</div>
+            <div class="step">3. Manage or share securely</div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+    <div class="container box-container">
+
+        <div class="box">
+            <h3>Branch Locations</h3>
+            <p>Delhi</p>
+            <p>Bengaluru</p>
+        </div>
+
+        <div class="box">
+            <h3>Quick Links</h3>
+            <a href="{% url 'index' %}">Home</a>
+            <a href="#features">Features</a>
+            <a href="{% url 'contact' %}">Contact</a>
+        </div>
+
+        <div class="box">
+            <h3>Contact</h3>
+            <p><i class="fas fa-map-marker-alt"></i> Delhi</p>
+            <p><i class="fas fa-envelope"></i> info@gmail.com</p>
+            <p><i class="fas fa-phone"></i> +91 7564838224</p>
+        </div>
+
+    </div>
+
+    <p class="credit">All Rights Reserved</p>
+</footer>
+
+<!-- ================= THEME SCRIPT ================= -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const toggle = document.getElementById("theme-toggle");
+        const icon = toggle.querySelector("i");
+        const html = document.documentElement;
+
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme) {
+            html.setAttribute("data-theme", savedTheme);
+            icon.className = savedTheme === "dark" ? "fas fa-sun" : "fas fa-moon";
+        }
+
+        toggle.addEventListener("click", function () {
+            const isDark = html.getAttribute("data-theme") === "dark";
+            html.setAttribute("data-theme", isDark ? "light" : "dark");
+            icon.className = isDark ? "fas fa-moon" : "fas fa-sun";
+            localStorage.setItem("theme", isDark ? "light" : "dark");
+        });
+
+        /* MOBILE NAVBAR */
+            const menuBtn = document.getElementById("menu-toggle");
+            const navbar = document.querySelector(".navbar");
+
+            menuBtn.addEventListener("click", function () {
+                navbar.classList.toggle("open");
+            });
+    });
+</script>
 
 </body>
-
 </html>

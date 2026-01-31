@@ -1,39 +1,63 @@
-{% extends 'navigation.html'%}
+{% extends 'navigation.html' %}
 {% load static %}
+
+{% block title %}Contact | NoteStack{% endblock %}
+
 {% block body %}
 
-{% if error == "no" %}
-     <script>
-	   alert('Your Message has been Send Successfully');
-	   window.location=('{% url 'contact' %}');
-     </script>
-{% endif %}
+<!-- ================= CONTACT PAGE ================= -->
+<section class="contact-page">
+  <div class="container">
 
-{% if error == "yes" %}
-     <script>
-	    alert('Something went wrong, Try Again');
-     </script>
-{% endif %}
-<br><br><br><br>
-<section class="contact" id="contact">
-<h1 class="heading mt-5">contact us</h1>
+    <div class="contact-card">
 
-<div class="row">
+      <!-- LEFT: FORM -->
+      <div class="contact-form">
 
-    <form method="post">
-        {% csrf_token %}
-        <input type="text" placeholder="full name" name="fullname" class="box">
-        <input type="email" placeholder="your email" name="email" class="box">
-        <input type="number" placeholder="your contact number" name="mobile" class="box">
-        <input type="text" placeholder="Subject" name="subject" class="box">
-        <textarea name="message" id="" cols="30" rows="8" class="box address" placeholder="Send Message..."></textarea>
-        <input type="submit" class="btn" value="send now">
-    </form>
+        <h1>Contact Us</h1>
+        <p class="subtitle">
+          Have a question or feedback? We’d love to hear from you.
+        </p>
 
-    <div class="image">
-        <img src="{% static 'images/Learning-pana.png' %}" alt="">
+        {% if error == "no" %}
+          <div class="alert success">
+            ✅ Your message has been sent successfully.
+          </div>
+        {% endif %}
+
+        {% if error == "yes" %}
+          <div class="alert error">
+            ❌ Something went wrong. Please try again.
+          </div>
+        {% endif %}
+
+        <form method="post">
+          {% csrf_token %}
+
+          <div class="form-grid">
+            <input type="text" name="fullname" placeholder="Full name" required>
+            <input type="email" name="email" placeholder="Email address" required>
+          </div>
+
+          <input type="number" name="mobile" placeholder="Contact number">
+          <input type="text" name="subject" placeholder="Subject">
+
+          <textarea name="message" rows="6" placeholder="Write your message..." required></textarea>
+
+          <button type="submit" class="btn-primary full-width">
+            Send Message
+          </button>
+        </form>
+      </div>
+
+      <!-- RIGHT: IMAGE -->
+      <div class="contact-image">
+        <img src="{% static 'images/Learning-pana.png' %}" alt="Contact illustration">
+      </div>
+
     </div>
 
-</div>
+  </div>
 </section>
+
 {% endblock %}
