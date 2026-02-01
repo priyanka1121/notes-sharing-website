@@ -315,3 +315,32 @@ def upload_avatar(request):
         profile.save()
 
     return redirect("profile")
+
+def viewallnotes(request):
+    notes = Notes.objects.all()
+
+    branch = request.GET.get('branch')
+    subject = request.GET.get('subject')
+    filetype = request.GET.get('filetype')
+
+    if branch:
+        notes = notes.filter(branch__iexact=branch)
+
+    if subject:
+        notes = notes.filter(subject__icontains=subject)
+
+    if filetype:
+        notes = notes.filter(filetype__iexact=filetype)
+    branches = Notes.objects.values_list('branch', flat=True).distinct()
+    filetypes = Notes.objects.values_list('filetype', flat=True).distinct()
+
+    context = {
+        'notes': notes,
+        'branches': branches,
+        'filetypes': filetypes,
+        'selected_branch': branch,
+        'selected_subject': subject,
+        'selected_filetype': filetype,
+    }
+
+    return render(request, 'viewallnotes.html', context)

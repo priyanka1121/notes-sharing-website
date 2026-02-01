@@ -47,9 +47,9 @@
             <td class="truncate">{{ i.description }}</td>
 
             <td>
-              {% if i.status == "Approved" %}
+              {% if i.status|lower == "accept" %}
                 <span class="status approved">Approved</span>
-              {% elif i.status == "Pending" %}
+              {% elif i.status|lower == "pending" %}
                 <span class="status pending">Pending</span>
               {% else %}
                 <span class="status rejected">{{ i.status }}</span>
