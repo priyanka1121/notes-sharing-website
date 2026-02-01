@@ -48,3 +48,84 @@
     font-family: 'monotype corsiva';
     text-align: center;
 }
+
+/* ================= USER NAV (THEME CONSISTENT) ================= */
+
+.user-navbar {
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 20px;
+}
+
+/* Brand */
+.user-brand {
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--primary) !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Links */
+.user-navbar .nav-link {
+    color: var(--text);
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 999px;
+    transition: all 0.25s ease;
+    position: relative;
+}
+
+/* Bubble hover — SAME AS HOME */
+.user-navbar .nav-link::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--primary);
+    opacity: 0;
+    border-radius: 999px;
+    transform: scale(0.8);
+    transition: transform 0.25s ease, opacity 0.25s ease;
+    z-index: -1;
+}
+
+.user-navbar .nav-link:hover::before {
+    opacity: 0.15;
+    transform: scale(1);
+}
+
+/* Right side */
+.user-nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* User button */
+.user-btn {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 6px 14px;
+    color: var(--text);
+}
+
+.user-btn:hover {
+    background: var(--bg);
+}
+
+/* Dropdown */
+.dropdown-menu {
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .user-nav-right {
+        margin-top: 12px;
+        justify-content: center;
+    }
+}
