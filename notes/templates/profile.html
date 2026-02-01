@@ -1,69 +1,154 @@
-{% extends 'usernavigation.html'%}
+{% extends 'usernavigation.html' %}
 {% load static %}
+
 {% block body %}
-<br><br><br><br><br>
-<div class="container card shadow mt-5">
-    <div class="card-body">
 
-     <h2 class="text-center text-danger">PROFILE</h2>
-     <hr>
-     <DIV class="row">
-       <div class="col-md-6">
-         <b>Full Name : </b>
-       </div>
-       <div class="col-md-6" style="text-transform: capitalize">
-           {{data.user.first_name}} {{data.user.last_name}}
-       </div>
-     </DIV>
-     <hr>
+<section class="profile-page">
+  <div class="container">
 
-     <DIV class="row">
-       <div class="col-md-6">
-         <b>Email ID : </b>
-       </div>
-       <div class="col-md-6" style="text-transform: capitalize">
-              {{data.user.username}}
-       </div>
-     </DIV>
-     <hr>
+    <!-- ================= PROFILE HERO ================= -->
+    <div class="profile-hero">
 
-     <DIV class="row">
-       <div class="col-md-6">
-          <b>Contact : </b>
-       </div>
-       <div class="col-md-6" style="text-transform: capitalize">
-               {{data.contact}}
-       </div>
-     </DIV>
-     <hr>
+      <!-- AVATAR -->
+      <form method="post" enctype="multipart/form-data" action="{% url 'upload_avatar' %}">
+        {% csrf_token %}
 
-     <DIV class="row">
-       <div class="col-md-6">
-          <b>Branch : </b>
-       </div>
-       <div class="col-md-6" style="text-transform: capitalize">
-               {{data.branch}}
-       </div>
-     </DIV>
-     <hr>
-     <a href="{% url 'edit_profile' %}" class="btn btn-primary mt-4">Edit Profile</a>
-   </div>
-</div>
-<!-- Codebase Core JS -->
-	<script src="{% static 'assets/js/core/jquery.min.js' %}"></script>
-	<script src="{% static 'assets/js/core/popper.min.js' %}"></script>
-	<script src="{% static 'assets/js/core/bootstrap.min.js' %}"></script>
-	<script src="{% static 'assets/js/core/jquery.slimscroll.min.js' %}"></script>
-	<script src="{% static 'assets/js/core/jquery.scrollLock.min.js' %}"></script>
-	<script src="{% static 'assets/js/core/jquery.appear.min.js' %}"></script>
-	<script src="{% static 'assets/js/core/jquery.countTo.min.js' %}"></script>
-	<script src="{% static 'assets/js/core/js.cookie.min.js' %}"></script>
-	<script src="{% static 'assets/js/codebase.js' %}"></script>
+        <div class="profile-avatar-wrap">
 
-	<!-- Page JS Plugins -->
-	<script src="{% static 'assets/js/plugins/chartjs/Chart.bundle.min.js' %}"></script>
+          <label class="profile-avatar avatar-click">
+            {% if data.avatar %}
+              <img src="{{ data.avatar.url }}" alt="avatar">
+            {% else %}
+              {{ user.first_name|slice:":1"|upper }}
+            {% endif %}
 
-	<!-- Page JS Code -->
-	<script src="{% static 'assets/js/pages/be_pages_dashboard.js' %}"></script>
+            <!-- hover overlay -->
+            <span class="avatar-overlay">
+              <i class="fas fa-camera"></i>
+            </span>
+
+            <input
+              type="file"
+              name="avatar"
+              hidden
+              onchange="this.form.submit()"
+            >
+          </label>
+
+          <!-- REAL BUTTON LOOK -->
+          <button type="button" class="avatar-btn"
+                  onclick="this.previousElementSibling.querySelector('input').click()">
+            Change Photo
+          </button>
+
+        </div>
+      </form>
+
+
+      <!-- META -->
+      <div class="profile-meta">
+        <h1>{{ data.user.first_name }} {{ data.user.last_name }}</h1>
+        <p>{{ data.branch }} • {{ data.user.username }}</p>
+
+        <!-- COMPLETION -->
+        <div class="profile-progress">
+          <div class="progress-bar">
+            <span style="width: 80%"></span>
+          </div>
+          <small>Profile 80% complete</small>
+        </div>
+      </div>
+
+      <a href="{% url 'edit_profile' %}" class="btn-primary">
+        Edit Profile
+      </a>
+    </div>
+
+    <!-- ================= STATS ================= -->
+    <div class="profile-stats">
+
+      <div class="stat-card">
+        <strong>12</strong>
+        <span>Notes Uploaded</span>
+      </div>
+
+      <div class="stat-card">
+        <strong>8</strong>
+        <span>Approved</span>
+      </div>
+
+      <div class="stat-card">
+        <strong>3</strong>
+        <span>Pending</span>
+      </div>
+
+      <div class="stat-card">
+        {% if profile.is_online %}
+          <div class="stat-value online">
+            <span class="dot"></span> Online
+          </div>
+        {% else %}
+          <div class="stat-value offline">
+            <span class="dot"></span>
+            {{ profile.last_seen|timesince }} ago
+          </div>
+        {% endif %}
+        <span class="stat-label">Status</span>
+      </div>
+
+    </div>
+
+    <!-- ================= INFO GRID ================= -->
+    <div class="profile-grid">
+
+      <div class="profile-card">
+        <span class="label">Full Name</span>
+        <strong>{{ data.user.first_name }} {{ data.user.last_name }}</strong>
+      </div>
+
+      <div class="profile-card">
+        <span class="label">Email</span>
+        <strong>{{ data.user.username }}</strong>
+      </div>
+
+      <div class="profile-card">
+        <span class="label">Contact</span>
+        <strong>{{ signup.contact }}</strong>
+      </div>
+
+      <div class="profile-card">
+        <span class="label">Branch</span>
+        <strong>{{ signup.branch }}</strong>
+      </div>
+
+    </div>
+
+    <!-- ================= ACTIVITY ================= -->
+    <div class="activity-card">
+      <h3>Recent Activity</h3>
+
+      <ul class="activity-list">
+        <li>
+          <span class="dot"></span>
+          Uploaded <b>Machine Learning Notes.pdf</b>
+          <small>2 days ago</small>
+        </li>
+
+        <li>
+          <span class="dot"></span>
+          Password changed
+          <small>5 days ago</small>
+        </li>
+
+        <li>
+          <span class="dot"></span>
+          Profile updated
+          <small>1 week ago</small>
+        </li>
+      </ul>
+    </div>
+
+  </div>
+</section>
 
 {% endblock %}

@@ -1,65 +1,142 @@
-<html lang="en">
-
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
 <head>
-    {% load static %}
-    <title>Notes Sharing Site</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="{% static 'css/mystyle.css' %}">
-    <!-- Data table CDN-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#example').DataTable();
-        });
-    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Dashboard | NoteStack{% endblock %}</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- SINGLE SOURCE OF TRUTH -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-sm justify-content-center" style="background-color : lightgrey">
-        <a class="navbar-brand" href=""><span style="color:#243A73"><b>Online</b></span><span style="color:#243A73">
-                <b>Notes</b> </span><span style="color:#243A73"><b>Sharing</b></span></a>
-        <ul class="navbar-nav">
-            <li class="navbar-item">
-                <a class="nav-link" href="{% url 'profile' %}"><i class="fas fa-home"></i> HOME</a>
-            </li>
 
-            <li class="navbar-item">
-                <a class="nav-link" href="{% url 'upload_notes' %}"><i class="fas fa-cloud-upload-alt"></i> UPLOAD NOTES</a>
-            </li>
+<header class="site-header">
+  <div class="container header-inner">
 
-            <li class="navbar-item">
-                <a class="nav-link" href="{% url 'view_mynotes' %}"><i class="fas fa-eye"></i> VIEW MY NOTES</a>
-            </li>
+    <!-- LOGO -->
+    <div class="left">
+      <a href="{% url 'profile' %}" class="logo">
+        <i class="fas fa-book-reader"></i>
+        <span>NoteStack</span>
+      </a>
+    </div>
 
-            <li class="navbar-item">
-                <a class="nav-link" href="{% url 'viewallnotes' %}"><i class="fas fa-eye"></i> VIEW ALL NOTES</a>
-            </li>
-
-            <li class="navbar-item">
-                <a class="nav-link" href="{% url 'logout' %}"><i class="fas fa-power-off"></i> LOGOUT</a>
-            </li>
-
-            <div class="dropdown">
-                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Welcome {{request.user.first_name}}</button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="{% url 'profile' %}">PROFILE</a>
-                    <a class="dropdown-item" href="{% url 'edit_profile' %}">EDIT PROFILE</a>
-                    <a class="dropdown-item" href="{% url 'changepassword' %}">CHANGE PASSWORD</a>
-                </div>
-            </div>
-        </ul>
+    <!-- NAV LINKS -->
+    <nav class="navbar">
+      <ul>
+        <li><a href="{% url 'profile' %}" class="active">Dashboard</a></li>
+        <li><a href="{% url 'upload_notes' %}">Upload</a></li>
+        <li><a href="{% url 'view_mynotes' %}">My Notes</a></li>
+        <li><a href="{% url 'viewallnotes' %}">All Notes</a></li>
+      </ul>
     </nav>
-</body>
 
+    <!-- RIGHT SIDE -->
+    <div class="nav-right">
+
+  <!-- THEME TOGGLE -->
+  <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+    <i class="fas fa-moon"></i>
+  </button>
+
+  <!-- USER MENU -->
+  <div class="user-menu">
+    <button class="user-chip" id="userMenuBtn" aria-expanded="false">
+        <span class="nav-avatar">
+          {% if data.avatar %}
+            <img src="{{ data.avatar.url }}" alt="avatar">
+          {% else %}
+            {{ user.first_name|slice:":1"|upper }}
+          {% endif %}
+        </span>
+        <span class="username">{{ user.first_name }}</span>
+        <i class="fas fa-chevron-down"></i>
+    </button>
+
+
+        <div class="user-dropdown" id="userDropdown">
+          <a href="{% url 'profile' %}">Profile</a>
+          <a href="{% url 'edit_profile' %}">Edit Profile</a>
+          <a href="{% url 'changepassword' %}">Change Password</a>
+          <div class="divider"></div>
+          <a href="{% url 'logout' %}" class="danger">Logout</a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</header>
+
+<main>
+  {% block body %}{% endblock %}
+</main>
+
+<!-- THEME TOGGLE SCRIPT -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+  /* ================= THEME TOGGLE ================= */
+  const toggle = document.getElementById("theme-toggle");
+
+  if (toggle) {
+    const icon = toggle.querySelector("i");
+    const html = document.documentElement;
+
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme) {
+      html.setAttribute("data-theme", savedTheme);
+      icon.className = savedTheme === "dark" ? "fas fa-sun" : "fas fa-moon";
+    }
+
+    toggle.addEventListener("click", function () {
+      const isDark = html.getAttribute("data-theme") === "dark";
+      html.setAttribute("data-theme", isDark ? "light" : "dark");
+      icon.className = isDark ? "fas fa-moon" : "fas fa-sun";
+      localStorage.setItem("theme", isDark ? "light" : "dark");
+    });
+  }
+
+  /* ================= USER DROPDOWN ================= */
+  const userBtn = document.getElementById("userMenuBtn");
+  const dropdown = document.getElementById("userDropdown");
+
+  if (userBtn && dropdown) {
+
+    // Toggle dropdown on click
+    userBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      dropdown.classList.toggle("open");
+      userBtn.setAttribute(
+        "aria-expanded",
+        dropdown.classList.contains("open")
+      );
+    });
+
+    // Close when clicking outside
+    document.addEventListener("click", function () {
+      dropdown.classList.remove("open");
+      userBtn.setAttribute("aria-expanded", "false");
+    });
+
+    // Prevent close when clicking inside
+    dropdown.addEventListener("click", function (e) {
+      e.stopPropagation();
+    });
+  }
+
+});
+</script>
+
+</body>
 </html>
-// {% block body %} {% endblock %}
